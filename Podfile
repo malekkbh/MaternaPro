@@ -7,6 +7,7 @@ target 'Pro' do
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
+pod 'mailcore2-ios'
 
   # Pods for Pro
 
