@@ -1,22 +1,22 @@
 <h1>‘Materna’ </h1>
 <h3>
- the app is made for food donation , that started As a Hackathon Project provided By IBM and Materna (yap, the milk company )
+ This app is made for Food Donation, which started as a Hackathon Project provided by IMB and Materna (yap, the milk company )
 </h3>
 •	Multiple users : Manager , Store Worker , Anonymous ( the Volunteer ) , 
 <br><br>
-•	The volunteer Don’t have to make any SignUp , he can Write to the DB , but cant read from it . If the Volunteer is sending the donation as a delivery , mail will be sent automatically from the organization mail to the delivery company .
+•	The Volunteer doesn’t have to make any SignUp, he can simply write to the DB, but he can’t read from it.If the Volunteer sends the donation as a delivery , mail will be sent automatically from the organization mail to the delivery company .
 <br><br>
-•	 The Manager can do everything worker dose , in addition to add workers and products . 
+•	 •	 The Manager can do everything worker dose , in addition to add workers and products . 
 <br><br>
 
-•	The Store Worker receive the donation ( through delivery or self-passing ) and confirm it to the DB , donation will be recognized as the pushID they get from the DB when the volunteer send them 
+•	The store worker receives the donation (through delivery or self-passing) and confirms it to the DB, the donation will be recognized as the push ID they get from the DB when the volunteer sends them.
 <br><br>
-•	Multiple product Types : delivered , undelivered .
+•	Multiply product Types: delivered, undelivered.
 <br><br>
-•	BarCode: the products are identified by their barCode with a build-in BarCode Reader for a better UX 
+•	Bar-Code: the products are identified by their Barcode with a build-in Barcode Reader for a better UX.
 <br><br>
-•	Location: the will be able to locate the user Location and fill up in the right place automatically 
+•	Location: the app will be able to locate the user’s Location and fill it up in the right place automatically. 
 <br><br>
-•	Notification: the app send a ”thank you “ Notification to the volunteer after receiving the donation . 
+•	Notification: the app sends a “thank you” notification to the Volunteer after receiving the donation.
 <br><br>
-•	The app is managed through Firebase DB 
+•	The app is managed through Firebase DB
