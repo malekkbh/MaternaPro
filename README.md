@@ -2,6 +2,9 @@
 <h3>
  This app is made for Food Donation, which started as a Hackathon Project provided by IMB and Materna (yap, the milk company )
 </h3>
+<h2>
+please run $ pod install befor running the app 
+</h2>
 •	Multiple users : Manager , Store Worker , Anonymous ( the Volunteer ) , 
 <br><br>
 •	The Volunteer doesn’t have to make any SignUp, he can simply write to the DB, but he can’t read from it.If the Volunteer sends the donation as a delivery , mail will be sent automatically from the organization mail to the delivery company .
