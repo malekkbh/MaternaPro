@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 
 
+
 class ViewController: UITableViewController  {
     
     
@@ -34,22 +35,24 @@ class ViewController: UITableViewController  {
             userName = preferences.string(forKey: "auth")!
         }
         
-        if ( userName == "manager"){
-            getDataArry("allProdacts")
-        }
+        getDataArry("allProdacts")
         
-        if ( userName == "volunteer"){
-            getDataArry("Deleverd")
-        }
-        
-        if ( userName == "storWorker"){
-            getDataArry("unDeleverd")
-        }
-        
-        if ( userName == "" ){
-            getDataArry("")
-        }
-        
+//        if ( userName == "manager"){
+//            getDataArry("allProdacts")
+//        }
+//
+//        if ( userName == "volunteer"){
+//            getDataArry("Deleverd")
+//        }
+//
+//        if ( userName == "storWorker"){
+//            getDataArry("unDeleverd")
+//        }
+//
+//        if ( userName == "" ){
+//            getDataArry("")
+//        }
+//
         
         
     }
@@ -212,7 +215,13 @@ class ViewController: UITableViewController  {
     
     func logInUser() {
         
-        let alert = UIAlertController (title: "LogIn", message: "enter Youer userName and pass ", preferredStyle: .alert)
+        let alert = UIAlertController (title: "LogIn", message: "enter Youer userName and pass ", preferredStyle: .alert )
+        
+        let subview = (alert.view.subviews.first?.subviews.first?.subviews.first!)! as UIView
+        
+        
+        subview.backgroundColor = UIColor.green
+
         
         let login = UIAlertAction (title: "Login", style: .default , handler: { (action) -> Void in
             
@@ -236,6 +245,8 @@ class ViewController: UITableViewController  {
         
         alert.addTextField { (userTF: UITextField) in
             userTF.placeholder = "User Name"
+            userTF.backgroundColor = UIColor.blue
+            userTF.borderStyle = .roundedRect
         }
         
         alert.addTextField { (passTF: UITextField) in
@@ -251,7 +262,7 @@ class ViewController: UITableViewController  {
         alert.addAction(login)
         alert.addAction(cancel)
         
-        present(alert, animated: true, completion: nil)
+//        present(alert, animated: true, completion: nil)
     } // logInUser
     
     
@@ -386,7 +397,9 @@ class ViewController: UITableViewController  {
             var firstAlert = UIAlertController(title: "This section is for the AMOTA Volnteers! ", message: "", preferredStyle: .alert)
             
             firstAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                self.logInUser()
+//                self.logInUser()
+                self.performSegue(withIdentifier: "loginseguwe", sender: nil)
+
             }))
             
             present(firstAlert, animated: true, completion: nil)
@@ -419,7 +432,12 @@ class ViewController: UITableViewController  {
                     print ("Error signing out: %@", signOutError)
                 }
                 
+                
                 self.cleanUserDuflts()
+                
+                self.performSegue(withIdentifier: "vcToFirstSegue", sender: nil)
+
+                //vcToFirstSegue
             })) //logOutAction
             
             logedInAlert.addAction(UIAlertAction(title: "Cancell", style: .cancel, handler: nil))
@@ -435,6 +453,7 @@ class ViewController: UITableViewController  {
         preferences.set( "" , forKey: "name")
         preferences.set( "" , forKey: "UID" )
         preferences.set( "" , forKey: "auth")
+        preferences.set("", forKey: "city")
     }
     
     @IBAction func plusOnClick(_ sender: UIBarButtonItem) {

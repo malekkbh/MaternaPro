@@ -12,6 +12,7 @@ import CoreLocation
 import MapKit
 import Firebase
 import MessageUI
+//import SearchTextField
 
 
 
@@ -19,7 +20,9 @@ import MessageUI
 
 
 
-class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , CLLocationManagerDelegate {
+
+
+class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , CLLocationManagerDelegate  {
     
     
     @IBAction func bcTf(_ sender: UITextField) {
@@ -29,11 +32,12 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         print("tf change\(sender.text as! String)")
     }
     
+    let preferences = UserDefaults.standard
     
     func findBarCode(_ barCode: String) {
        var val: [String:String] = [:]
         var prodName: String = ""
-        let cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 3))
+        let cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 4))
         
         let tff = cell!.viewWithTag(5) as! UITextField
                 Database.database().reference().child("products").child(barCode).observeSingleEvent(of: .value, with: {
@@ -42,7 +46,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
                     if ( snapshot.exists()){
             val = snapshot.value as! [String:String]
             
-            let preferences = UserDefaults.standard
+            
             if val != nil {
                 tff.text = val["productName"] as! String
                         }}
@@ -97,7 +101,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         
         
         
-         cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 1))
+         cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 2))
          var mLable = cell?.viewWithTag(3) as! UILabel
         print ("lable?\(mLable.text)")
         if(mLable.text == "  שיטת משלוח" ){
@@ -106,7 +110,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         items["delevry"] = mLable.text
         
         
-         cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 2))
+         cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 3))
          tf = cell?.viewWithTag(4) as! UITextField
         
         if(tf.text == nil || tf.text == "" ){
@@ -116,7 +120,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         items["barCode"] = tf.text
         
         
-        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 3))
+        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 4))
         tf = cell?.viewWithTag(5) as! UITextField
         
         if(tf.text == nil || tf.text == "" ){
@@ -128,7 +132,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         
         
         
-        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 4))
+        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 5))
         tf = cell?.viewWithTag(6) as! UITextField
         
         if(tf.text == nil || tf.text == "" ){
@@ -138,7 +142,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         items["nots"] = tf.text
         
         
-        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 5))
+        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 6))
         tf = cell?.viewWithTag(7) as! UITextField
         
         if(tf.text == nil || tf.text == "" ){
@@ -148,7 +152,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         items["fullName"] = tf.text
         
         
-        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 6))
+        cell = self.tableView.cellForRow(at: IndexPath(item: 0, section: 7))
         tf = cell?.viewWithTag(8) as! UITextField
         
         if(tf.text == nil || tf.text == "" ){
@@ -166,17 +170,48 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         items["deliveryID"] = ref.key
         
         ref.setValue(items)
+        Database.database().reference().child("allProdacts").childByAutoId().setValue(items)
 
         
         var alert = UIAlertController(title: "מספר פנייה - נא לרשום אותו על החבילה ", message: ref.key , preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK" , style: .default, handler: { (action) in }))
+        alert.addAction(UIAlertAction(title: "OK" , style: .default, handler: { (action) in
+            
+            var indicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+            indicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+            indicator.center = self.view.center
+            indicator.backgroundColor = UIColor.lightGray
+            self.view.addSubview(indicator)
+            self.view.bringSubview(toFront: indicator)
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
+            indicator.startAnimating() ;
+//
+            self.performSegue(withIdentifier: "toremToFirstSeg", sender: nil)
+
+            print("send")
+
+        }))
         print("mmmmmmmmm\(items)")
         
 
         present(alert, animated: true, completion: nil)
         sendEmail(itemTostring(items))
         
+        //toremToFirstSeg
+
+        
     }//Done
+    
+    
+    func yes () {
+        
+        self.performSegue(withIdentifier: "toremToFirstSeg", sender: nil)
+    }
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        let when = DispatchTime.now() //+ delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
+    }
     
     
     
@@ -206,6 +241,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tag = -1
+        
         // Do any additional setup after loading the view.
         
       //  view.backgroundColor = UIColor.black
@@ -465,7 +501,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
             
             let cell = self.tableView.cellForRow(at: path)
             
-                let label = cell!.viewWithTag(self.tag + 2) as! UILabel
+                let label = cell!.viewWithTag(self.tag + 1) as! UILabel
                 label.text = self.text
             
         })
@@ -498,7 +534,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
     
    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        return 8
     }
     
     // Set the spacing between sections
@@ -517,13 +553,42 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell =   tableView.dequeueReusableCell(withIdentifier: "checkListItem\(indexPath.section)" , for: indexPath) as! UITableViewCell
+        var cell =   tableView.dequeueReusableCell(withIdentifier: "checkListItem\(0)" , for: indexPath) as! UITableViewCell
+
         
+        if( indexPath.section == 1 ) {
+            var cell1 =   tableView.dequeueReusableCell(withIdentifier: "checkListItem" , for: indexPath) as! UITableViewCell
+            let cityText = cell1.viewWithTag(1230) as! UITextView
+            cityText.isUserInteractionEnabled = false 
+            if ( preferences.string(forKey: "city") != nil) {
+            cityText.text = preferences.string(forKey: "city") as! String
+            }
+            else {
+                cityText.text = ""
+            }
+            cell1.layer.borderColor = UIColor.darkGray.cgColor
+            cell1.layer.borderWidth = 1.3
+            cell1.layer.cornerRadius = 20
+            cell1.clipsToBounds = true
+            return cell1
+        }
+        
+            
+        else {
+            var section = indexPath.section
+            
+            if ( indexPath.section != 0 ){
+                
+                section = (indexPath.section) - 1
+            }
+            
+         cell =   tableView.dequeueReusableCell(withIdentifier: "checkListItem\(section)" , for: indexPath) as! UITableViewCell
+
         cell.layer.borderColor = UIColor.darkGray.cgColor
         cell.layer.borderWidth = 1.3
         cell.layer.cornerRadius = 20
         cell.clipsToBounds = true
-        
+        }
         
         return cell
         }
@@ -536,11 +601,15 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
     
             tag = indexPath.section
         
-        if(tag == 1){
+        if( tag == 1 ) {
+            self.performSegue(withIdentifier: "toremToCitySegue", sender: nil)
+        }
+        
+        if(tag == 2){
             call4Picker("בחר שיטת משלוח" , indexPath)
         }
         
-        if( tag == 2 ){
+        if( tag == 3 ){
             let cell = self.tableView.cellForRow(at: indexPath )
             
             let tff = cell!.viewWithTag(4) as! UITextField
@@ -555,10 +624,10 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
 
 }
 
-extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource {
+extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource   {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if ( tag == 1 ){
+        if ( tag == 2 ){
             return delevary.count}
         
         
@@ -566,7 +635,7 @@ extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if ( tag == 1 ){
+        if ( tag == 2 ){
             return delevary[row]}
        
         
@@ -578,8 +647,19 @@ extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource {
         return 1
     }
     
+    
+    
+
+    
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if ( tag == 1 ){
+        
+        //toremToCitySegue
+        
+        
+        
+        
+        if ( tag == 2 ){
             text = delevary[row]
             
             if text == "תרומה בכסף" {
@@ -594,11 +674,9 @@ extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource {
             }//if text = mony
             
            
-        }//if tage == 1
+        }//if tage == 2
         
-        
-        
-        
+    
        
     }
     
@@ -638,7 +716,9 @@ extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource {
             }
         }
         
-    }
+    
+}//send email
+    
     
 
 
