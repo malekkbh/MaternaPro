@@ -195,7 +195,7 @@ class Torem: UITableViewController , AVCaptureMetadataOutputObjectsDelegate  , C
         
 
         present(alert, animated: true, completion: nil)
-        sendEmail(itemTostring(items))
+//        sendEmail(itemTostring(items))
         
         //toremToFirstSeg
 
@@ -680,46 +680,46 @@ extension Torem :  UIPickerViewDelegate , UIPickerViewDataSource   {
        
     }
     
-    func sendEmail(_ body:String!){
-        let smtpSession = MCOSMTPSession()
-        smtpSession.hostname = "smtp.gmail.com"
-        smtpSession.username = "malek.kbh@gmail.com"
-        smtpSession.password = "malekana"
-        smtpSession.port = 465
-        smtpSession.authType = MCOAuthType.saslPlain
-        smtpSession.connectionType = MCOConnectionType.TLS
-        smtpSession.connectionLogger = {(connectionID, type, data) in
-            if data != nil {
-                if let string = NSString(data: data!, encoding: String.Encoding.utf8.rawValue){
-                    NSLog("Connectionlogger: \(string)")
-                }
-            }
-        }
-        let builder = MCOMessageBuilder()
-        builder.header.to = [MCOAddress(displayName: "Malek", mailbox: "malek.kbh@gmail.com")]
-        builder.header.from = MCOAddress(displayName: "Malek", mailbox: "Maretna@gmail.com")
-        builder.header.subject = "Test Email"
-        builder.htmlBody="<p>\(body!)</p>"
-        
-        
-        let rfc822Data = builder.data()
-        let sendOperation = smtpSession.sendOperation(with: rfc822Data)
-        sendOperation?.start { (error) -> Void in
-            if (error != nil) {
-                NSLog("Error sending email: \(error)")
-                
-                
-            } else {
-                NSLog("Successfully sent email!")
-                
-                
-            }
-        }
-        
-    
-}//send email
-    
-    
+//    func sendEmail(_ body:String!){
+//        let smtpSession = MCOSMTPSession()
+//        smtpSession.hostname = "smtp.gmail.com"
+//        smtpSession.username = "malek.kbh@gmail.com"
+//        smtpSession.password = "malekana"
+//        smtpSession.port = 465
+//        smtpSession.authType = MCOAuthType.saslPlain
+//        smtpSession.connectionType = MCOConnectionType.TLS
+//        smtpSession.connectionLogger = {(connectionID, type, data) in
+//            if data != nil {
+//                if let string = NSString(data: data!, encoding: String.Encoding.utf8.rawValue){
+//                    NSLog("Connectionlogger: \(string)")
+//                }
+//            }
+//        }
+//        let builder = MCOMessageBuilder()
+//        builder.header.to = [MCOAddress(displayName: "Malek", mailbox: "malek.kbh@gmail.com")]
+//        builder.header.from = MCOAddress(displayName: "Malek", mailbox: "Maretna@gmail.com")
+//        builder.header.subject = "Test Email"
+//        builder.htmlBody="<p>\(body!)</p>"
+//
+//
+//        let rfc822Data = builder.data()
+//        let sendOperation = smtpSession.sendOperation(with: rfc822Data)
+//        sendOperation?.start { (error) -> Void in
+//            if (error != nil) {
+//                NSLog("Error sending email: \(error)")
+//
+//
+//            } else {
+//                NSLog("Successfully sent email!")
+//
+//
+//            }
+//        }
+//
+//
+//}//send email
+//
+//
 
 
     

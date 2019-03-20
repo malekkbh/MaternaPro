@@ -8,7 +8,6 @@
 
 #ifndef sendEmail_bridge_h
 #define sendEmail_bridge_h
-#include "MailCore.h"
 
 
 #endif /* sendEmail_bridge_h */

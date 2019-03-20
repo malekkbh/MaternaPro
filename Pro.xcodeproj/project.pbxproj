@@ -36,7 +36,6 @@
 		EE2C592F206AC39300BF89DB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EE2C5931206AC44500BF89DB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EE2C5933206AC5FB00BF89DB /* Torem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Torem.swift; sourceTree = "<group>"; };
-		EE2C5935206AC62E00BF89DB /* sendEmail_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sendEmail_bridge.h; sourceTree = "<group>"; };
 		EE2C5936206AC71A00BF89DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EE4561772210C1750002EA4A /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE4561792210C17A0002EA4A /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,7 +113,6 @@
 				EE2C5921206AB19900BF89DB /* Pro.xcdatamodeld */,
 				EE2C5931206AC44500BF89DB /* ViewController.swift */,
 				EEC2DA832200F5A00088CB55 /* LogInController.swift */,
-				EE2C5935206AC62E00BF89DB /* sendEmail_bridge.h */,
 				EE2C5936206AC71A00BF89DB /* GoogleService-Info.plist */,
 			);
 			path = Pro;
